@@ -334,7 +334,7 @@
       
       # Execute at launch
       exec-once = [
-        "bash -c '~/nixos/resources/scripts/system/lock.sh'"
+        "lock-script"
         "hyprpaper & mako"
         "wl-clipboard-history -t & wl-paste --watch cliphist store & rm \"$HOME/.cache/cliphist/db\""
         "hyprpm reload"
