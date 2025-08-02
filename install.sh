@@ -4,7 +4,8 @@ set -euo pipefail
 # Check if HOST variable is set
 if [[ -z "${HOST:-}" ]]; then
     echo "ERROR: HOST variable not set"
-    echo "Usage: export HOST=laptop && sudo ./install.sh"
+    echo "Usage: export HOST=laptop && sudo -E ./install.sh"
+    echo "Note: Use 'sudo -E' to preserve environment variables"
     exit 1
 fi
 
