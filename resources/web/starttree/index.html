@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link href="./styles/style.css" rel="stylesheet" type="text/css"/>
+  <title>Home</title>
+  <style>
+    /* Ensure wrapping for better responsiveness */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .column {
+      flex: 1;
+      min-width: 250px; /* Ensures proper wrapping on smaller screens */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="prompt">
+      ~ <span>λ</span> tree
+    </div>
+
+    <div class="row">
+      <!-- General Section -->
+      <div class="column">
+        <div class="tree">
+          <h1>.</h1>
+          <ul>
+            <li>
+              <h1>general</h1>
+              <ul>
+                <li><a href="https://discord.com/channels/@me/">discord</a></li>
+                <li><a href="https://www.youtube.com/">youtube</a></li>
+                <li><a href="https://www.amazon.com/">amazon</a></li>
+                <li><a href="https://www.github.com/">github</a></li>
+                <li><a href="https://www.reddit.com/">reddit</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Productivity Section -->
+      <div class="column">
+        <div class="tree">
+          <h1>.</h1>
+          <ul>
+            <li>
+              <h1>productivity</h1>
+              <ul>
+                <li><a href="https://chat.openai.com/">chatgpt</a></li>
+                <li><a href="https://mail.google.com/">gmail</a></li>
+                <li>
+                  <a href="https://drive.google.com/">google drive</a>
+                  <ul>
+                    <li><a href="https://docs.google.com/">google docs</a></li>
+                    <li><a href="https://sheets.google.com/">google sheets</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Finances Section -->
+      <div class="column">
+        <div class="tree">
+          <h1>.</h1>
+          <ul>
+            <li>
+              <h1><a href="https://docs.google.com/spreadsheets/d/1tcY8v7KG_0GTx6lXZp2VKe7yLFEzzLY0YNE5_b6dCqo">finances</a></h1>
+              <ul>
+                <li>
+                  <h1>investments</h1>
+                  <ul>
+                    <li><a href="https://client.schwab.com/Areas/Access/Login">schwab</a></li>
+                    <li><a href="https://digital.fidelity.com/prgw/digital/login/full-page">fidelity</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <h1>banking</h1>
+                  <ul>
+                    <li><a href="https://www.americanexpress.com/en-us/account/login">american express</a></li>
+                    <li><a href="https://onlinebanking.usbank.com/auth/login/">us bank</a></li>
+                    <li><a href="https://www.chase.com/">chase</a></li>
+                    <li><a href="https://app.koinly.io/login/">koinly</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- System Section -->
+      <div class="column">
+        <div class="tree">
+          <h1>.</h1>
+          <ul>
+            <li>
+              <h1>system</h1>
+              <ul>
+                <li><a href="http://localhost:11987/">coolercontrol</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="prompt">
+      ~ <span>λ</span> google
+    </div>
+    <form action="https://www.google.com/search" method="GET">
+      <h1>search:</h1>
+      <input autofocus="autofocus" name="q" type="text"/>
+    </form>
+  </div>
+</body>
+</html>

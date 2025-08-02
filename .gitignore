@@ -1,0 +1,32 @@
+# pks
+bootstrap_agenix_key
+*.key
+*.pem
+
+# Build artifacts
+result
+result-*
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Direnv
+.direnv/
+.envrc
+
+# various OS files
+.DS_Store
+Thumbs.db
+
+# tmp files
+*.tmp
+*.bak
+*.backup
+
+# Secrets (except encrypted .age files)
+secrets/*
+!secrets/*.age
