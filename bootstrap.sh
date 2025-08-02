@@ -102,7 +102,7 @@ encrypt_user_password() {
     PUBLIC_KEY=$(cat bootstrap_agenix_key.pub | cut -d' ' -f1-2)
     
     # Use age from nixpkgs to encrypt
-    if nix run nixpkgs#age -- -r "$PUBLIC_KEY" -o "$OUTPUT_FILE" < "$TEMP_FILE"; then
+    if nix --extra-experimental-features  "nix-command flakes" run nixpkgs#age -- -r "$PUBLIC_KEY" -o "$OUTPUT_FILE" < "$TEMP_FILE"; then
         print_success "Password encrypted successfully: $OUTPUT_FILE"
     else
         print_error "Failed to encrypt password"
