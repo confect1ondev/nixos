@@ -39,4 +39,35 @@ nix --experimental-features "nix-command flakes" \
 echo "Installing NixOS..."
 nixos-install --flake "${SCRIPT_DIR}#${HOST}" --no-root-passwd
 
+# Copy configuration to /mnt/etc/nixos for the installed system
+echo "Copying configuration to installed system..."
+if [[ ! -d /mnt ]]; then
+    echo "ERROR: /mnt directory not found. Installation may have failed."
+    exit 1
+fi
+
+mkdir -p /mnt/etc/nixos || {
+    echo "ERROR: Failed to create /mnt/etc/nixos directory"
+    exit 1
+}
+
+cp -r "${SCRIPT_DIR}"/* /mnt/etc/nixos/ || {
+    echo "ERROR: Failed to copy configuration files"
+    exit 1
+}
+
+chown -R root:root /mnt/etc/nixos || {
+    echo "ERROR: Failed to set ownership on configuration files"
+    exit 1
+}
+
+echo "Configuration successfully copied to /mnt/etc/nixos"
+
+# Also copy to /etc/nixos if it exists (for immediate use)
+if [[ -d /etc/nixos ]]; then
+    echo "Copying configuration to current system..."
+    cp -r "${SCRIPT_DIR}"/* /etc/nixos/ || echo "WARNING: Failed to copy to current system /etc/nixos"
+    chown -R root:root /etc/nixos || echo "WARNING: Failed to set ownership on current system config"
+fi
+
 echo "Installation complete! You can now reboot."

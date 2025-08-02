@@ -11,5 +11,6 @@
     fill = fill
     sort = name
     color = #1e1e2e
+    post_command = cp "$wallpaper" ~/.config/hypr/wallpaper.png
   '';
 }

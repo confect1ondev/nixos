@@ -356,7 +356,7 @@
       input = {
         kb_layout = "us";
         follow_mouse = 1;
-        sensitivity = -1;
+        sensitivity = if hostName == "laptop" then 0.5 else -1;
         kb_options = "caps:backspace";
       };
       

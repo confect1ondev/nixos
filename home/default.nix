@@ -15,6 +15,7 @@
     ./starship.nix
     ./firefox.nix
     ./waypaper.nix
+    ./wallpaper-init.nix
   ];
 
   # Base home configuration
