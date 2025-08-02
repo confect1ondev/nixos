@@ -57,7 +57,7 @@ let
   # Simple wallpaper switcher that launches waypaper
   wallpaper-switcher = pkgs.writeShellScriptBin "wallpaper-switcher" ''
     # Launch waypaper with the wallpapers directory
-    ${pkgs.waypaper}/bin/waypaper --folder ~/.config/hypr --backend hyprpaper
+    ${pkgs.waypaper}/bin/waypaper --folder ~/.config/wallpapers --backend hyprpaper
   '';
 
   # Screenshot helper script

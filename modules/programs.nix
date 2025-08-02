@@ -38,6 +38,7 @@
     nodejs_24
     jdk
     glib
+    gcc
 
     # Virtualization tools
     qemu

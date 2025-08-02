@@ -329,7 +329,8 @@
         "9, monitor:eDP-1"
         "10, monitor:eDP-1"
       ] else [
-        "1, monitor:DP-1"
+        "1, monitor:HDMI-A-1"
+        "2, monitor:DP-1"
       ];
       
       # Execute at launch
@@ -356,7 +357,7 @@
       input = {
         kb_layout = "us";
         follow_mouse = 1;
-        sensitivity = if hostName == "laptop" then 0.5 else -1;
+        sensitivity = if hostName == "laptop" then 0.2 else -1;
         kb_options = "caps:backspace";
       };
       
