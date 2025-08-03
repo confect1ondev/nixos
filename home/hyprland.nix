@@ -67,7 +67,7 @@
       label = [
         # Top left labels - multilingual lock messages
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "TERMINAL LOCKED – AUTHENTICATION REQUIRED";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -77,7 +77,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "端末ロック中 – 認証が必要です";
           font_family = "Noto Sans CJK JP";
           font_size = 18;
@@ -87,7 +87,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "ACCÈS RESTREINT – VEUILLEZ VOUS IDENTIFIER";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -97,7 +97,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "ЗАЩИЩЕННЫЙ ТЕРМИНАЛ – ПОДТВЕРДИТЕ ДОСТУП";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -107,7 +107,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "터미널 잠김 – 인증 필요";
           font_family = "Noto Sans CJK KR";
           font_size = 18;
@@ -117,7 +117,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "BLOQUEO DE TERMINAL – AUTENTICACIÓN REQUERIDA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -127,7 +127,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "GERÄT GESPERRT – AUTHENTIFIZIERUNG ERFORDERLICH";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -137,7 +137,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "BLOCCO TERMINALE – AUTENTICAZIONE RICHIESTA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -147,7 +147,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "TERMINAL BLOQUEADO – AUTENTICAÇÃO NECESSÁRIA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -159,7 +159,7 @@
         
         # Top right time/date/system labels
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:40] echo \"DATE: $(date +%s.%3N)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -169,7 +169,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:40] echo \"$(date '+%I:%M:%S %p')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -179,7 +179,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:60000] echo \"$(date '+%B %d, %Y')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -189,7 +189,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:40] echo \"UPTIME: $(awk '{print int($1 * 1000)}' /proc/uptime)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -199,7 +199,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:100] awk '{s=int($1); d=int(s/86400); h=int((s%86400)/3600); m=int((s%3600)/60); if(d>0) printf \"%d days, %d hours, %d minutes\", d, h, m; else if(h>0) printf \"%d hours, %d minutes\", h, m; else printf \"%d minutes\", m}' /proc/uptime";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -209,7 +209,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:100] echo \"PROC: $(ps -e | wc -l)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -219,7 +219,7 @@
           valign = "top";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:100] df -h / | awk 'NR==2 { print \"DISK: \" $5 }'";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -231,7 +231,7 @@
         
         # Bottom left system info
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:10000] echo \"OS: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -241,7 +241,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:60000] echo \"KERNEL: $(uname -r)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -251,7 +251,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:1000] echo \"USER: $USER\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -261,7 +261,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:1000] echo \"TTY: $(tty)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -271,7 +271,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:1000] echo \"SHELL: $SHELL\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -281,7 +281,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:1000] bash -c '[[ -f /tmp/hyprlock-start ]] && journalctl --since \"$(cat /tmp/hyprlock-start)\" | grep \"password check failed\" | wc -l | xargs echo \"FAILED LOGINS:\" || echo \"FAILED LOGINS: N/A\"'";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -291,7 +291,7 @@
           valign = "bottom";
         }
         {
-          monitor = "DP-1";
+          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
           text = "cmd[update:1000] echo \"$(lsblk -o TYPE | grep crypt >/dev/null && echo 'ENCRYPTED (LUKS)' || echo 'NOT ENCRYPTED')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
