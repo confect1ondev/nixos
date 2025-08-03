@@ -27,7 +27,7 @@ nrb  # nixos-boot: Sync and rebuild boot
 
 The aliases automatically:
 - Sync your changes from `~/nixos-dev` to `/etc/nixos`
-- Stage changes in git
+- Stage changes in git (so Nix in `/etc/nixos` can find all files, even if they're unstaged in `~/nixos-dev`)
 - Run the appropriate nixos-rebuild command
 
 ### Manual install

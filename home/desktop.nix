@@ -346,6 +346,7 @@
                     </ul>
                   </div>
                 </div>
+              </div>
           
               <!-- Search Bar -->
               <div class="prompt">

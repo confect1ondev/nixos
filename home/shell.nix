@@ -7,6 +7,11 @@
     initExtra = ''
       export PATH="$HOME/.npm-global/bin:$PATH"
       
+      # Ensure npm is configured to use the correct prefix
+      if command -v npm &> /dev/null && [ ! -f "$HOME/.npmrc" ]; then
+        npm config set prefix "$HOME/.npm-global"
+      fi
+      
       # Kitty shell integration
       if [[ "$TERM" == "xterm-kitty" ]]; then
         # Create a custom sudo wrapper that changes background color
@@ -61,5 +66,8 @@
     GDK_BACKEND = "x11";
   };
   home.file.".npm-global/.keep".text = "";
+  home.file.".npmrc".text = ''
+    prefix=''${HOME}/.npm-global
+  '';
   home.sessionPath = [ "$HOME/.npm-global/bin" ];
 }
