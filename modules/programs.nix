@@ -39,6 +39,7 @@
     jdk
     glib
     gcc
+    age
 
     # Virtualization tools
     qemu

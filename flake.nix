@@ -10,14 +10,13 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix.url = "github:ryantm/agenix";
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, agenix, firefox-addons }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, firefox-addons }@inputs: 
   let
     system = "x86_64-linux";
     
@@ -40,7 +39,6 @@
         modules = [
           { nixpkgs.overlays = [ overlay-unstable ]; }
           disko.nixosModules.disko
-          agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           ({ config, ... }: {
             home-manager.useGlobalPkgs = true;
@@ -63,7 +61,6 @@
         modules = [
           { nixpkgs.overlays = [ overlay-unstable ]; }
           disko.nixosModules.disko
-          agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           ({ config, ... }: {
             home-manager.useGlobalPkgs = true;

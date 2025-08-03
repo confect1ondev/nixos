@@ -15,8 +15,9 @@
       "libvirtd"  # Virtualization access
       "kvm"       # KVM access
     ];
-    # Use age-encrypted password hash
-    hashedPasswordFile = config.age.secrets."${config.my.username}-password".path;
+    # Default password - CHANGE THIS IMMEDIATELY AFTER INSTALLATION
+    initialPassword = "changeme";
+    
     packages = with pkgs; [
       # should use home manager instead :)
     ];

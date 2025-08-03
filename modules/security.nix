@@ -6,12 +6,9 @@
   security.tpm2.pkcs11.enable = true;  # TPM2 PKCS#11 support
   security.tpm2.tctiEnvironment.enable = true;
 
-  # Agenix configuration
-  age.identityPaths = [ "/etc/nixos/bootstrap_agenix_key" ];
-
-  age.secrets = {
-    "${config.my.username}-password".file = ../secrets + "/${config.my.username}-password.age";
-  };
+  # Agenix configuration for future secrets (if needed)
+  # age.identityPaths = [ ];
+  # age.secrets = { };
 
   # Nix configuration
   nix.gc = {
