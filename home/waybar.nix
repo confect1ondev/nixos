@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.waybar = {
@@ -17,7 +17,7 @@
         
         modules-left = [ "custom/power" "clock" ];
         modules-center = [ "hyprland/workspaces" ];
-        modules-right = [ "custom/wallpaper" "custom/system" "pulseaudio" "bluetooth" "network" ];
+        modules-right = [ "custom/wallpaper" "custom/system" "battery" "pulseaudio" "bluetooth" "network" ];
 
         # Power button
         "custom/power" = {
@@ -102,7 +102,7 @@
 
         # Network
         network = {
-          format-wifi = " {signalStrength}%";
+          format-wifi = "󰖩 {signalStrength}%";
           format-ethernet = "";
           format-linked = "";
           format-disconnected = "";
@@ -110,6 +110,21 @@
           tooltip-format-wifi = "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}";
           tooltip-format-ethernet = "{ipaddr}/{cidr}";
           on-click = "nm-connection-editor";
+        };
+
+        # Battery
+        battery = {
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon} {capacity}%";
+          format-charging = "󰂄 {capacity}%";
+          format-plugged = "󰚥 {capacity}%";
+          format-alt = "{icon} {time}";
+          format-full = "󰁹 100%";
+          format-icons = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          tooltip-format = "{timeTo}\n{power}W";
         };
 
       };
@@ -178,6 +193,7 @@
       /* General module styling */
       #clock,
       #custom-system,
+      #battery,
       #pulseaudio,
       #bluetooth,
       #network,
@@ -197,6 +213,7 @@
       /* Hover effects */
       #clock:hover,
       #custom-system:hover,
+      #battery:hover,
       #pulseaudio:hover,
       #bluetooth:hover,
       #network:hover,
@@ -313,6 +330,30 @@
 
       #network.ethernet {
         color: @green;
+      }
+
+      /* Battery */
+      #battery {
+        color: @green;
+      }
+
+      #battery.charging {
+        color: @yellow;
+      }
+
+      #battery.plugged {
+        color: @teal;
+      }
+
+      #battery.warning {
+        color: @peach;
+        background: rgba(250, 179, 135, 0.1);
+      }
+
+      #battery.critical {
+        color: @red;
+        background: rgba(243, 139, 168, 0.1);
+        /* animation: urgent-pulse 2s infinite; */
       }
 
       /* Wallpaper button - perfect square like power button */
