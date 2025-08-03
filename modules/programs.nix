@@ -39,6 +39,7 @@
     jdk
     glib
     gcc
+    getent
     age
 
     # Virtualization tools

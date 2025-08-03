@@ -15,6 +15,7 @@
     ../../modules/programs.nix
     ../../modules/security.nix
     ../../modules/users.nix
+    ../../modules/password-warning.nix
     ../../modules/tpm-enrollment.nix
   ];
 
