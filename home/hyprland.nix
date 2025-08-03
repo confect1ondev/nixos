@@ -307,6 +307,10 @@
   wayland.windowManager.hyprland = {
     enable = true;
     
+    plugins = lib.optionals (hostName == "laptop") [
+      pkgs.hyprlandPlugins.hyprgrass
+    ];
+    
     settings = {
       # Monitor configuration
       monitor = if hostName == "laptop" then [
@@ -338,7 +342,6 @@
         "lock-script"
         "hyprpaper & mako"
         "wl-clipboard-history -t & wl-paste --watch cliphist store & rm \"$HOME/.cache/cliphist/db\""
-        "hyprpm reload"
         "hyprctl setcursor GoogleDot-Blue 24"
       ];
       
@@ -414,7 +417,8 @@
       };
       
       gestures = {
-        workspace_swipe = "off";
+        workspace_swipe = true;
+        workspace_swipe_cancel_ratio = 0.15;
       };
       
       misc = {
@@ -422,10 +426,29 @@
         disable_hyprland_logo = true;
       };
       
+      # Hyprgrass plugin configuration (only applies on laptop)
+      plugin = lib.mkIf (hostName == "laptop") {
+        touch_gestures = {
+          sensitivity = 4.0;  # Higher for tablet screens
+          workspace_swipe_fingers = 3;
+          long_press_delay = 400;
+          resize_on_border_long_press = true;
+          edge_margin = 10;
+        };
+      };
+      
       # Window rules
       windowrulev2 = [
         "suppressevent maximize, class:.*"
         "opacity 0.94 0.94,class:^(Code|Spotify)$"
+      ] ++ lib.optionals (hostName == "laptop") [
+        # Virtual keyboard rules
+        "float, class:^(wvkbd-mobintl)$"
+        "size 100% 300, class:^(wvkbd-mobintl)$"
+        "move 0 100%-300, class:^(wvkbd-mobintl)$"
+        "animation slide, class:^(wvkbd-mobintl)$"
+        "noblur, class:^(wvkbd-mobintl)$"
+        "nofocus, class:^(wvkbd-mobintl)$"
       ];
       
       # Keybindings
@@ -499,6 +522,18 @@
         ", code:172, exec, playerctl play-pause"
         ", code:173, exec, playerctl previous"
         ", code:171, exec, playerctl next"
+      ] ++ lib.optionals (hostName == "laptop") [
+        # Hyprgrass edge swipes
+        ", edge:r:l, workspace, +1"  # Swipe left from right edge - next workspace
+        ", edge:l:r, workspace, -1"  # Swipe right from left edge - previous workspace
+        ", edge:d:u, exec, pkill wvkbd-mobintl || wvkbd-mobintl -L 300"  # Swipe up from bottom - toggle keyboard
+        ", edge:l:u, exec, pamixer -ui 5"  # Swipe up from left edge - volume up
+        ", edge:l:d, exec, pamixer -ud 5"  # Swipe down from left edge - volume down
+        
+        # Hyprgrass finger gestures
+        ", swipe:4:d, killactive"  # 4 finger swipe down - close window
+        ", swipe:4:u, fullscreen, 0"  # 4 finger swipe up - toggle fullscreen
+        ", tap:3, exec, app-launcher"  # 3 finger tap - app launcher
       ];
       
       binde = [
@@ -510,6 +545,10 @@
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
+      ] ++ lib.optionals (hostName == "laptop") [
+        # Hyprgrass long press gestures
+        ", longpress:2, movewindow"  # 2 finger long press - move window
+        ", longpress:3, resizewindow"  # 3 finger long press - resize window
       ];
     };
   };

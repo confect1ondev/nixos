@@ -27,6 +27,7 @@
     home-manager
     libnotify  # For desktop notifications
     lsof
+    pamixer
 
     # TPM2 tools
     tpm2-tss

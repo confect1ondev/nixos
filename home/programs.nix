@@ -1,4 +1,4 @@
-{ config, pkgs, my, ... }:
+{ config, pkgs, my, lib, hostName, ... }:
 
 {
   home.packages = with pkgs; [
@@ -37,6 +37,8 @@
     spotify
     monero-gui
     ledger-live-desktop
+  ] ++ lib.optionals (hostName == "laptop") [
+    wvkbd  # Virtual keyboard for touch
   ];
 
   # Enable programs
