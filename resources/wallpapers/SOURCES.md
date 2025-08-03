@@ -29,4 +29,4 @@
 
 ---
 
-*All wallpapers are used for personal use only. Credits belong to their respective creators.*
+*All images are for personal use only. Credits belong to their respective creators. Please reach out to [me@confect1on.com](mailto:me@confect1on.com) with any requsts for removal.*

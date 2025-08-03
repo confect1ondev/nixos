@@ -14,6 +14,7 @@
     ../../modules/services.nix
     ../../modules/programs.nix
     ../../modules/security.nix
+    ../../modules/tools.nix
     ../../modules/users.nix
     ../../modules/password-warning.nix
     ../../modules/tpm-enrollment.nix
@@ -34,11 +35,12 @@
   # Host-specific packages
   environment.systemPackages = with pkgs; [
     liquidctl  # For controlling liquid coolers and other devices
+    openrgb    # RGB lighting control
   ];
   
-  # Liquidctl configuration for NZXT Kraken
+  # Liquidctl configuration (mainly to init NZXT Kraken)
   systemd.services.liquidctl-init = {
-    description = "Initialize NZXT Kraken 2023 Elite";
+    description = "Initialize Liquidctl";
     wantedBy = [ "multi-user.target" ];
     after = [ "multi-user.target" ];
     serviceConfig = {

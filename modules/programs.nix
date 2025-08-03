@@ -4,7 +4,6 @@
   # System utilities
   # Firefox is now configured in firefox-policies.nix
   programs.thunar.enable = true;
-  programs.coolercontrol.enable = true;
 
   # Steam
   programs.steam = {
@@ -27,6 +26,7 @@
     pavucontrol
     home-manager
     libnotify  # For desktop notifications
+    lsof
 
     # TPM2 tools
     tpm2-tss

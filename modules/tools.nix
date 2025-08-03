@@ -1,0 +1,196 @@
+{ config, lib, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
+    # Quick command finder - search and execute from bash history
+    (writeScriptBin "q" ''
+      #!${bash}/bin/bash
+      
+      # Configuration: define what you want to be warned about
+      dangerous_commands=("rm" "dd" "mkfs" "chmod" "chown")
+      
+      # Prefix to identify commands run by this script (for internal filtering only, not added to history)
+      script_prefix="q "
+      
+      # Load history from file
+      history_file=~/.bash_history
+      
+      # ANSI escape codes for colored text
+      BLUE_BOLD='\033[1;34m'
+      BOLD_GRAY='\033[1;90m'
+      GREEN='\033[0;32m'
+      RED='\033[1;91m'
+      YELLOW='\033[1;33m'
+      RESET='\033[0m'
+      
+      print_blue() {
+        local message=$1
+        echo -e "''${BLUE_BOLD}''${message}''${RESET}"
+      }
+      
+      print_green() {
+        local message=$1
+        echo -e "''${GREEN}''${message}''${RESET}"
+      }
+      
+      print_red() {
+        local message=$1
+        echo -e "''${RED}''${message}''${RESET}"
+      }
+      
+      print_yellow() {
+        local message=$1
+        echo -e "''${YELLOW}''${message}''${RESET}"
+      }
+      
+      if [ -z "$1" ]; then
+        print_red "Please provide a search term."
+        exit 1
+      fi
+      
+      search_term=$1
+      
+      if [ ! -f "$history_file" ]; then
+        print_red "History file not found."
+        exit 1
+      fi
+      
+      matches=$(grep "$search_term" "$history_file" | grep -v "^$script_prefix" | tac | awk '!seen[$0]++' | head -5)
+      
+      if [ -z "$matches" ]; then
+        print_red "No matches found for '$search_term'."
+        exit 1
+      fi
+      
+      commands=()
+      counter=1
+      
+      print_blue "Recent unique commands matching '$search_term':"
+      while IFS= read -r line; do
+        # number should be bold, the cmd should be regular text
+        echo -e "''${BOLD_GRAY}''${counter}.''${RESET} ''${line}"
+        commands+=("$line")
+        counter=$((counter + 1))
+      done <<< "$matches"
+      
+      # Pressing enter is slower, this is supposed to be super fast and convenient. No need to press enter
+      print_yellow "Select a command number (1-''${#commands[@]}), or press 0 or 'c' to cancel:"
+      
+      while true; do
+        read -n 1 -s choice
+        case $choice in
+          [1-5])
+            if [[ $choice -ge 1 && $choice -le ''${#commands[@]} ]]; then
+              selected_command="''${commands[$((choice-1))]}"
+      
+              # since we're not requiring anything but a number to execute, make sure the cmd isnt too dangerous
+              for dangerous_command in "''${dangerous_commands[@]}"; do
+                if [[ $selected_command =~ ^$dangerous_command ]]; then
+                  print_red "\nThis command is potentially destructive: $selected_command"
+                  read -p "$(print_yellow 'Press Enter to confirm and any other key to cancel: ')" -n 1 -s confirm
+                  if [ -z "$confirm" ]; then
+                    print_green "\nExecuting: $selected_command"
+                    eval "$selected_command"
+                    # Add the executed command as the most recent in history without prefix
+                    echo "$selected_command" >> "$history_file"
+                  else
+                    print_red "\nCancelled. Exiting."
+                  fi
+                  exit 0
+                fi
+              done
+      
+              # execute with no confirming if the cmd isnt dangerous
+              print_green "\nExecuting: $selected_command"
+              # Add the executed command as the most recent in history without prefix
+              echo "$selected_command" >> "$history_file"
+              eval "$selected_command"
+              break
+            fi
+            ;;
+          0 | c | C)
+            print_red "\nCancelled. Exiting."
+            exit 0
+            ;;
+          *)
+            print_red "\nInvalid selection. Please choose a valid number or press 0/c to cancel."
+            ;;
+        esac
+      done
+    '')
+    
+    # JWT decoder
+    (writeScriptBin "jwt" ''
+      #!${bash}/bin/bash
+      
+      # Color codes
+      RED='\033[0;31m'
+      GREEN='\033[0;32m'
+      YELLOW='\033[0;33m'
+      BLUE='\033[0;34m'
+      RESET='\033[0m'
+      
+      # Function to decode base64url
+      base64url_decode() {
+        local input=$1
+        local padding=$(printf %$(( (4 - ''${#input} % 4) % 4 ))s | tr ' ' =)
+        echo "$input$padding" | ${coreutils}/bin/base64 --decode | ${jq}/bin/jq .
+      }
+      
+      # Check if JWT is provided
+      if [ -z "$1" ]; then
+        echo -e "''${RED}Error: No JWT provided.''${RESET}"
+        echo "Usage: $0 <JWT>"
+        exit 1
+      fi
+      
+      # Split the JWT into its components
+      IFS='.' read -r header payload signature <<< "$1"
+      
+      # Reprint the full JWT with color-coded parts
+      echo -e "''${YELLOW}Full JWT:''${RESET}"
+      echo -e "''${BLUE}''${header}''${RESET}.''${GREEN}''${payload}''${RESET}.''${RED}''${signature}''${RESET}"
+      echo
+      
+      # Decode and display the parts
+      echo -e "''${YELLOW}Header:''${RESET}"
+      echo -e "''${BLUE}"
+      base64url_decode "$header"
+      echo -e "''${RESET}"
+      
+      echo -e "''${YELLOW}Payload:''${RESET}"
+      echo -e "''${GREEN}"
+      base64url_decode "$payload"
+      echo -e "''${RESET}"
+      
+      echo -e "''${YELLOW}Signature (Base64URL Encoded):''${RESET} ''${RED}$signature''${RESET}"
+    '')
+    
+    # Video device watcher - finds and plays video from webcam/capture devices
+    (writeScriptBin "watch-video" ''
+      #!${bash}/bin/bash
+      
+      # Iterate through video devices from /dev/video0 to /dev/video10
+      for i in $(seq 0 10); do
+          device="/dev/video$i"
+          # Check if the device exists and is accessible
+          if [ -e "$device" ] && [ -r "$device" ]; then
+              echo "Found video input at $device"
+              # Play the video
+              ${ffmpeg-full}/bin/ffplay "$device"
+              exit 0
+          fi
+      done
+      
+      # If no suitable device is found
+      echo "Error: Could not find suitable video input."
+      exit 1
+    '')
+    
+    # Alias for watch-video
+    (writeScriptBin "wv" ''
+      #!${bash}/bin/bash
+      exec watch-video "$@"
+    '')
+  ];
+}

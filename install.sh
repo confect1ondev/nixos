@@ -317,14 +317,36 @@ install_nixos() {
 copy_configuration() {
     print_step "Copying Configuration to Installed System"
     
+    # Extract username from Nix configuration
+    local TARGET_USER=""
+    
+    # Try to get username from common.nix default value
+    if [[ -f "$SCRIPT_DIR/modules/common.nix" ]]; then
+        TARGET_USER=$(grep -A2 'username = lib.mkOption' "$SCRIPT_DIR/modules/common.nix" | \
+                      grep 'default = ' | \
+                      sed 's/.*default = "\([^"]*\)".*/\1/' | \
+                      head -1)
+    fi
+    
+    # Fallback to confect1on if extraction failed
+    if [[ -z "$TARGET_USER" ]]; then
+        TARGET_USER="confect1on"
+        print_warning "Could not extract username from config, using default: $TARGET_USER"
+    else
+        print_info "Using username from config: $TARGET_USER"
+    fi
+    
+    local TARGET_HOME="/mnt/home/$TARGET_USER"
+    local TARGET_DEV_DIR="$TARGET_HOME/nixos-dev"
+    
     if [[ "$DRY_RUN" == "true" ]]; then
-        print_info "[DRY RUN] Creating /mnt/etc/nixos directory..."
+        print_info "[DRY RUN] Creating $TARGET_DEV_DIR directory..."
         print_info "[DRY RUN] Copying configuration files..."
         print_info "[DRY RUN] Source: $SCRIPT_DIR/"
-        print_info "[DRY RUN] Destination: /mnt/etc/nixos/"
+        print_info "[DRY RUN] Destination: $TARGET_DEV_DIR/"
         print_info "[DRY RUN] Files to copy: $(find "$SCRIPT_DIR" -type f 2>/dev/null | wc -l || echo "247") files"
-        print_info "[DRY RUN] Setting ownership to root:root..."
-        print_info "[DRY RUN] Also copying to /etc/nixos..."
+        print_info "[DRY RUN] Setting ownership to $TARGET_USER:users..."
+        print_info "[DRY RUN] Creating /mnt/etc/nixos as minimal flake directory..."
         print_success "Configuration copied successfully"
         return 0
     fi
@@ -335,32 +357,55 @@ copy_configuration() {
         exit 1
     fi
     
-    # Create directory
-    mkdir -p /mnt/etc/nixos || {
-        print_error "Failed to create /mnt/etc/nixos directory"
+    # Create user's nixos-dev directory
+    mkdir -p "$TARGET_DEV_DIR" || {
+        print_error "Failed to create $TARGET_DEV_DIR directory"
         exit 1
     }
     
-    # Copy with rsync
-    print_info "Copying configuration files..."
-    if rsync -av --info=progress2 "${SCRIPT_DIR}/" /mnt/etc/nixos/; then
-        print_success "Configuration copied to /mnt/etc/nixos"
+    # Copy with rsync to user's dev directory
+    print_info "Copying configuration files to user's nixos-dev..."
+    if rsync -av --info=progress2 "${SCRIPT_DIR}/" "$TARGET_DEV_DIR/"; then
+        print_success "Configuration copied to $TARGET_DEV_DIR"
     else
         print_error "Failed to copy configuration files"
         exit 1
     fi
     
-    # Set ownership
-    chown -R root:root /mnt/etc/nixos || {
+    # Set ownership to the target user
+    chown -R 1000:100 "$TARGET_DEV_DIR" || {
         print_error "Failed to set ownership on configuration files"
         exit 1
     }
     
-    # Also copy to current system if it exists
-    if [[ -d /etc/nixos ]]; then
-        print_info "Copying configuration to current system..."
-        rsync -av "${SCRIPT_DIR}/" /etc/nixos/ || print_warning "Failed to copy to current system"
-        chown -R root:root /etc/nixos || print_warning "Failed to set ownership on current system"
+    # Create minimal /etc/nixos with just a flake.nix pointing to the user's config
+    mkdir -p /mnt/etc/nixos || {
+        print_error "Failed to create /mnt/etc/nixos directory"
+        exit 1
+    }
+    
+    # Create a simple flake.nix that imports from the user's directory
+    cat > /mnt/etc/nixos/flake.nix << EOF
+{
+  description = "NixOS configuration";
+  
+  outputs = { ... }@inputs: {
+    nixosConfigurations = (import /home/$TARGET_USER/nixos-dev/flake.nix).outputs inputs;
+  };
+}
+EOF
+    
+    chown -R root:root /mnt/etc/nixos || {
+        print_error "Failed to set ownership on /etc/nixos"
+        exit 1
+    }
+    
+    # Also copy to current system's user directory if it exists
+    if [[ -d "/home/$TARGET_USER" ]]; then
+        print_info "Copying configuration to current user's directory..."
+        mkdir -p "/home/$TARGET_USER/nixos-dev"
+        rsync -av "${SCRIPT_DIR}/" "/home/$TARGET_USER/nixos-dev/" || print_warning "Failed to copy to current system"
+        chown -R "$TARGET_USER:users" "/home/$TARGET_USER/nixos-dev" || print_warning "Failed to set ownership on current system"
     fi
 }
 
@@ -371,9 +416,19 @@ copy_configuration() {
 main() {
     print_header "conf1's Installation Script"
     
+    # Extract username for password warning
+    local CONFIG_USER=""
+    if [[ -f "$SCRIPT_DIR/modules/common.nix" ]]; then
+        CONFIG_USER=$(grep -A2 'username = lib.mkOption' "$SCRIPT_DIR/modules/common.nix" | \
+                      grep 'default = ' | \
+                      sed 's/.*default = "\([^"]*\)".*/\1/' | \
+                      head -1)
+    fi
+    CONFIG_USER="${CONFIG_USER:-confect1on}"
+    
     # Show default password info
     print_warning "DEFAULT PASSWORD INFORMATION"
-    print_info "The default password for user 'confect1on' is: changeme"
+    print_info "The default password for user '$CONFIG_USER' is: changeme"
     print_info "You MUST change this password after first login!"
     print_info "The system will show warnings until you change it."
     echo
@@ -407,9 +462,20 @@ main() {
     # Get target disk
     TARGET_DISK=$(get_target_disk "$HOST")
     
+    # Extract username for summary
+    local CONFIG_USER=""
+    if [[ -f "$SCRIPT_DIR/modules/common.nix" ]]; then
+        CONFIG_USER=$(grep -A2 'username = lib.mkOption' "$SCRIPT_DIR/modules/common.nix" | \
+                      grep 'default = ' | \
+                      sed 's/.*default = "\([^"]*\)".*/\1/' | \
+                      head -1)
+    fi
+    CONFIG_USER="${CONFIG_USER:-confect1on}"
+    
     echo -e "  ${BOLD}Host:${NC} $HOST"
     echo -e "  ${BOLD}Config:${NC} $SCRIPT_DIR"
-    echo -e "  ${BOLD}Target:${NC} /mnt/etc/nixos"
+    echo -e "  ${BOLD}Target:${NC} /mnt/home/$CONFIG_USER/nixos-dev"
+    echo -e "  ${BOLD}User:${NC} $CONFIG_USER"
     echo -e "  ${BOLD}Disk:${NC} ${TARGET_DISK}"
     echo -e "  ${BOLD}Mode:${NC} $([ "$DRY_RUN" == "true" ] && echo "DRY RUN" || echo "LIVE")"
     

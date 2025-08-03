@@ -11,9 +11,5 @@
     ".config/wallpapers/dark-space.png".source = ../resources/wallpapers/dark-space.png;
     ".config/wallpapers/arknight.png".source = ../resources/wallpapers/arknight.png;
     ".config/wallpapers/vertical.png".source = ../resources/wallpapers/vertical.png;
-    ".config/StartTree" = {
-      source = ../resources/web/starttree;
-      recursive = true;
-    };
   };
 }

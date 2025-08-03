@@ -30,6 +30,14 @@
       # ModrinthApp with proper scaling
       ModrinthApp = "GDK_BACKEND=x11 ModrinthApp";
       modrinth-app = "GDK_BACKEND=x11 ModrinthApp";
+      
+      # NixOS rebuild commands
+      nixos-sync = "sudo rsync -av --delete ~/nixos-dev/ /etc/nixos/ && (cd /etc/nixos && sudo git add .) && sudo nixos-rebuild switch --flake /etc/nixos";
+      nrs = "nixos-sync"; # Short alias
+      nixos-test = "sudo rsync -av --delete ~/nixos-dev/ /etc/nixos/ && (cd /etc/nixos && sudo git add .) && sudo nixos-rebuild test --flake /etc/nixos";
+      nrt = "nixos-test"; # Short alias
+      nixos-boot = "sudo rsync -av --delete ~/nixos-dev/ /etc/nixos/ && (cd /etc/nixos && sudo git add .) && sudo nixos-rebuild boot --flake /etc/nixos";
+      nrb = "nixos-boot"; # Short alias
     };
   };
   

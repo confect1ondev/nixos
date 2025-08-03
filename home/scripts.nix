@@ -3,9 +3,15 @@
 let
   # Lock script with conditional OpenRGB support
   lock-script = pkgs.writeShellScriptBin "lock-script" ''
-    ${lib.optionalString (hostName != "laptop") ''
+    ${lib.optionalString (hostName == "confect1on") ''
+      # Set orientation since it inits wrong
+      ${pkgs.liquidctl}/bin/liquidctl -m \"Kraken\" set lcd screen orientation 270 &
+
       # Set red lighting before lock (desktop only)
       ${pkgs.openrgb}/bin/openrgb --profile "RED" &
+      
+      # Set Kraken LCD to lock screen
+      ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen gif ${../resources/lcd/lock.png} &
     ''}
     
     # Save lock start time (optional, for failed login tracking, very fancy :3)
@@ -14,9 +20,12 @@ let
     # Run Hyprlock
     ${pkgs.hyprlock}/bin/hyprlock
     
-    ${lib.optionalString (hostName != "laptop") ''
+    ${lib.optionalString (hostName == "confect1on") ''
       # When hyprlock exits (on unlock), set lighting to blue (desktop only)
       ${pkgs.openrgb}/bin/openrgb --profile "BLUE" &
+      
+      # Set Kraken LCD back to beacon gif
+      ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen gif ${../resources/lcd/beacon.gif} &
     ''}
   '';
 

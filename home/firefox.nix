@@ -1,4 +1,4 @@
-{ config, pkgs, lib, firefox-addons, ... }:
+{ config, pkgs, lib, firefox-addons, my, ... }:
 
 {
   programs.firefox = {
@@ -20,7 +20,7 @@
         # Set preferences
         settings = {
           # Homepage settings
-          "browser.startup.homepage" = "file://${config.home.homeDirectory}/.config/StartTree/index.html";
+          "browser.startup.homepage" = "http://localhost:${toString my.ports.starttree}/";
           "browser.startup.page" = 1;
           
           # Extension settings

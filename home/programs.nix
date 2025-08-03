@@ -37,7 +37,6 @@
     spotify
     monero-gui
     ledger-live-desktop
-    openrgb  # RGB lighting control
   ];
 
   # Enable programs

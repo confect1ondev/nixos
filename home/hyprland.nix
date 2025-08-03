@@ -351,7 +351,7 @@
       "$mainMod" = "SUPER";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
-      "$appMenu" = "~/nixos/resources/scripts/system/appmenu.sh";
+      "$appMenu" = "app-menu";
       
       # Input configuration
       input = {
