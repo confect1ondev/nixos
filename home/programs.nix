@@ -32,11 +32,17 @@
     # Games
     lunar-client
     modrinth-app
-
+    prismlauncher
+    
     # Apps
     spotify
+    jetbrains.idea-community-bin
+    obsidian
+    audacity
     monero-gui
     ledger-live-desktop
+    tor-browser-bundle-bin
+    blockbench
   ] ++ lib.optionals (hostName == "laptop") [
     wvkbd  # Virtual keyboard for touch
   ];

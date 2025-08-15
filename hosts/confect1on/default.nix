@@ -46,10 +46,17 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.liquidctl}/bin/liquidctl initialize all";
+      ExecStart = "${pkgs.liquidctl}/bin/liquidctl initialize all && sleep 1 && ${pkgs.liquidctl}/bin/liquidctl -m \"Kraken\" set lcd screen orientation 270 &";
     };
   };
   
   # Set up udev rules for liquidctl (non-root access)
   services.udev.packages = [ pkgs.liquidctl ];
+
+  # Ollama with ROCm/AMD GPU support
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+    loadModels = [ "huihui_ai/gemma3-abliterated:12b" ];
+  };
 }

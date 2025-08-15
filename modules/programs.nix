@@ -42,6 +42,9 @@
     gcc
     getent
     age
+    zip
+    unzip
+    jq
 
     # Virtualization tools
     qemu
@@ -51,6 +54,7 @@
     win-virtio
     win-spice
     OVMF
+    e2fsprogs
 
     # Cosmetic
     google-cursor

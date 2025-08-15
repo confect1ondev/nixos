@@ -64,10 +64,11 @@
   home.sessionVariables = {
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";
     GDK_BACKEND = "x11";
+    JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
   };
   home.file.".npm-global/.keep".text = "";
   home.file.".npmrc".text = ''
     prefix=''${HOME}/.npm-global
   '';
   home.sessionPath = [ "$HOME/.npm-global/bin" ];
-}
+}mkShell

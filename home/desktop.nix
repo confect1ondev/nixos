@@ -288,6 +288,7 @@
                           <li><a href="https://www.amazon.com/">amazon</a></li>
                           <li><a href="https://www.github.com/">github</a></li>
                           <li><a href="https://www.reddit.com/">reddit</a></li>
+                          <li><a href="https://roarcommunity.circle.so/">roar</a></li>
                         </ul>
                       </li>
                     </ul>

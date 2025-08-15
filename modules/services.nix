@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Enable CUPS to print documents
-  services.printing.enable = true;
-
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
@@ -51,4 +48,12 @@
 
   # Bluetooth
   services.blueman.enable = true;
+
+  # CoolerControl; dev is active and a super cool guy. Fantastic piece of software (as of Aug '25) :)
+  programs.coolercontrol.enable = true;
+  systemd.services.coolercontrol-liqctld.enable = false; # This conflicted with our other lctl scripting
+
+  # mfw i need to take my own advice and disable unused stuff :)
+  networking.modemmanager.enable = false;
+  services.printing.enable = false; # lets be so real, this doesn't really work half the time anyway
 }

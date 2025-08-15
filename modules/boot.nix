@@ -23,8 +23,17 @@
   };
   
   # Enable TPM2 device availability in initrd
-  boot.initrd.availableKernelModules = [ "tpm_tis" "tpm_crb" "nvme" "xhci_pci" "usbhid"];
+  boot.initrd.availableKernelModules = [ "tpm_tis" "tpm_crb" "nvme" "xhci_pci" "usbhid" "amdgpu" "i915"];
+
+  # Faster initrd decompression
+  boot.initrd.compressor = "zstd";
+  boot.initrd.compressorArgs = [ "--fast=5" ];
   
   # Enable KVM for virtualization
   boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
+
+  # ucode, almost forgot lol
+  hardware.cpu.intel.updateMicrocode = true;
+
+  hardware.enableRedistributableFirmware = true;
 }
