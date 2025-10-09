@@ -53,6 +53,9 @@
   programs.coolercontrol.enable = true;
   systemd.services.coolercontrol-liqctld.enable = false; # This conflicted with our other lctl scripting
 
+  # thunderbird
+  programs.thunderbird.enable = true;
+
   # mfw i need to take my own advice and disable unused stuff :)
   networking.modemmanager.enable = false;
   services.printing.enable = false; # lets be so real, this doesn't really work half the time anyway

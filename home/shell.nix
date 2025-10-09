@@ -32,10 +32,6 @@
       # TPM2 enrollment/re-enrollment alias
       reseal = "sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-partlabel/luks";
       
-      # ModrinthApp with proper scaling
-      ModrinthApp = "GDK_BACKEND=x11 ModrinthApp";
-      modrinth-app = "GDK_BACKEND=x11 ModrinthApp";
-      
       # NixOS rebuild commands
       nixos-sync = "sudo rsync -av --delete ~/nixos-dev/ /etc/nixos/ && (cd /etc/nixos && sudo git add .) && sudo nixos-rebuild switch --flake /etc/nixos";
       nrs = "nixos-sync"; # Short alias

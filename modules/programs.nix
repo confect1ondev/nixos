@@ -28,6 +28,7 @@
     libnotify  # For desktop notifications
     lsof
     pamixer
+    gsettings-desktop-schemas
 
     # TPM2 tools
     tpm2-tss
@@ -44,6 +45,10 @@
     age
     zip
     unzip
+    rar
+    unrar
+    xxd
+    ent
     jq
 
     # Virtualization tools

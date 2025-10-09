@@ -61,8 +61,9 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
     declare -A apps=(
       ["Spotify"]="${pkgs.spotify}/bin/spotify"
       ["Steam"]="${pkgs.steam}/bin/steam"
-      ["Modrinth"]="GDK_BACKEND=x11 ${pkgs.modrinth-app}/bin/ModrinthApp"
+      ["Modrinth"]="modrinth-app"
       ["Lunar Client"]="${pkgs.lunar-client}/bin/lunarclient"
+      ["Thunderbird"]="${pkgs.thunderbird}/bin/thunderbird"
       ["Firefox"]="${pkgs.firefox}/bin/firefox"
       ["VS Code"]="${pkgs.vscode}/bin/code"
       ["Terminal"]="${pkgs.kitty}/bin/kitty"
