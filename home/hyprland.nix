@@ -316,8 +316,8 @@
       monitor = if hostName == "laptop" then [
         "eDP-1,1920x1080@60,0x0,1"
       ] else [
-        "DP-1,3440x1440@165.00101,0x0,1"
-        "HDMI-A-1,2560x1440@60,-1440x-650,1,transform,1"
+        "DP-1,3440x1440@240.00101,0x0,1"
+        "HDMI-A-1,2560x1440@60,3440x-1050,1,transform,3"
       ];
       
       # Workspace assignments
@@ -333,8 +333,8 @@
         "9, monitor:eDP-1"
         "10, monitor:eDP-1"
       ] else [
-        "1, monitor:HDMI-A-1"
-        "2, monitor:DP-1"
+        "1, monitor:HDMI-A-2"
+        "2, monitor:DP-2"
       ];
       
       # Execute at launch

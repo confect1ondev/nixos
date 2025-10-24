@@ -46,7 +46,16 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.liquidctl}/bin/liquidctl initialize all && sleep 1 && ${pkgs.liquidctl}/bin/liquidctl -m \"Kraken\" set lcd screen orientation 270 &";
+      ExecStart = pkgs.writeShellScript "liquidctl-init" ''
+        # Initialize all liquidctl devices
+        ${pkgs.liquidctl}/bin/liquidctl initialize all || true
+
+        # Wait for devices to be ready after initialization
+        sleep 2
+
+        # Set Kraken LCD orientation (fail silently if device not found)
+        ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen orientation 270 || true
+      '';
     };
   };
   

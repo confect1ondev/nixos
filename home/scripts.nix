@@ -20,6 +20,35 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
   }
 
   ${lib.optionalString (hostName == "confect1on") ''
+    # State file to track lock status
+    LOCK_STATE_FILE="/tmp/hyprlock-state"
+
+    # Retry a liquidctl command up to 3 times, checking lock state before each attempt
+    # expected_state: "locked" or "unlocked"
+    retry_liquidctl_if_state () {
+      local expected_state="$1"
+      local cmd="$2"
+      local image="$3"
+
+      for i in {1..3}; do
+        # Check if state has changed
+        if [ "$expected_state" = "locked" ] && [ ! -f "$LOCK_STATE_FILE" ]; then
+          # Expected locked but now unlocked, abort
+          return 1
+        fi
+        if [ "$expected_state" = "unlocked" ] && [ -f "$LOCK_STATE_FILE" ]; then
+          # Expected unlocked but now locked, abort
+          return 1
+        fi
+
+        if ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen $cmd "$image" 2>/dev/null; then
+          return 0
+        fi
+        sleep 1
+      done
+      return 1
+    }
+
     # kick off a background worker that *may* set RED/LCD, but only if we're still locked then
     prelock_worker () (
       # wait for orgb and liqctl, but don't block hyprlock
@@ -28,13 +57,18 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
       # only act if hyprlock is still running
       if is_alive "$1"; then
         ${pkgs.openrgb}/bin/openrgb --profile "RED" || true
-        ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen gif ${../resources/lcd/lock.png} || true
+        retry_liquidctl_if_state "locked" "gif" "${../resources/lcd/lock.png}" || true
       fi
     )
   ''}
 
   # Save lock start time (optional)
   date --iso-8601=seconds > /tmp/hyprlock-start || true
+
+  ${lib.optionalString (hostName == "confect1on") ''
+    # Mark as locked
+    touch "$LOCK_STATE_FILE"
+  ''}
 
   # Start hyprlock in background and capture PID
   ${pkgs.hyprlock}/bin/hyprlock &
@@ -49,9 +83,12 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
   wait "$HLPID" || true
 
   ${lib.optionalString (hostName == "confect1on") ''
+    # Mark as unlocked
+    rm -f "$LOCK_STATE_FILE"
+
     # On unlock, set lighting to blue and restore LCD
     ${pkgs.openrgb}/bin/openrgb --profile "BLUE" || true
-    ${pkgs.liquidctl}/bin/liquidctl -m "Kraken" set lcd screen gif ${../resources/lcd/beacon.gif} || true
+    retry_liquidctl_if_state "unlocked" "gif" "${../resources/lcd/beacon.gif}" || true
   ''}
 '';
 

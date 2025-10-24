@@ -303,7 +303,7 @@
                       <li>
                         <h1>productivity</h1>
                         <ul>
-                          <li><a href="https://chat.openai.com/">chatgpt</a></li>
+                          <li><a href="https://claude.ai/">claude</a></li>
                           <li><a href="https://mail.google.com/">gmail</a></li>
                           <li>
                             <a href="https://drive.google.com/">google drive</a>

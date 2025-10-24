@@ -16,7 +16,7 @@
     
     timezone = lib.mkOption {
       type = lib.types.str;
-      default = "America/Phoenix";
+      default = "America/Chicago";
       description = "System timezone";
     };
     
