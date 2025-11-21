@@ -50,6 +50,8 @@
     xxd
     ent
     jq
+    opencode
+    claude-code
 
     # Virtualization tools
     qemu

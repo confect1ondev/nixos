@@ -1,0 +1,83 @@
+flowchart TB
+    subgraph DESKTOP["🖥️ Desktop Workstation"]
+        direction TB
+        
+        CPU["<b>Intel i5-13600K</b><br/>LGA 1700"]
+        COOLER["<b>NZXT Kraken Elite</b><br/>360mm RGB AIO"]
+        GPU["<b>AMD RX 7900 XTX</b><br/>PCIe x16 Slot"]
+        
+        subgraph MEMORY["Memory & Storage"]
+            direction LR
+            RAM["<b>64GB DDR5</b><br/>G.SKILL Trident Z5"]
+            SSD1["<b>990 PRO 1TB</b><br/>M.2 Slot 1"]
+            SSD2["<b>990 PRO 2TB</b><br/>M.2 Slot 2"]
+        end
+        
+        BOARD["<b>ASUS Z790M-Plus</b><br/>MicroATX Motherboard"]
+        WIFI["<b>Intel AX210</b><br/>WiFi 6E • BT 5.3<br/>M.2 E-Key Slot"]
+        PSU["<b>MSI MPG A1000G</b><br/>1000W • ATX 3.1"]
+        
+        CPU --> BOARD
+        COOLER -.->|Cooling| CPU
+        GPU --> BOARD
+        WIFI --> BOARD
+        MEMORY --> BOARD
+        PSU ==>|Power| BOARD
+    end
+    
+    DESKTOP ====> DISPLAYS
+    DESKTOP ====> PERIPHERALS
+    
+    subgraph DISPLAYS["🖥️ Display Setup"]
+        direction LR
+        PRIMARY["<b>Primary</b><br/>3440×1440 @ 240Hz<br/>Ultrawide<br/><i>DisplayPort</i>"]
+        SECONDARY["<b>Secondary</b><br/>2560×1440 @ 60Hz<br/>Portrait Mode<br/><i>HDMI</i>"]
+    end
+    
+    subgraph PERIPHERALS["🎮 Peripherals"]
+        direction TB
+        
+        subgraph AUDIO_GRP["Audio Chain"]
+            direction LR
+            MIXER["<b>FIFINE</b><br/>Gaming Mixer"]
+            MIC["<b>Dynamic Mic</b><br/>XLR Connection"]
+            PHONES["<b>Headphones</b>"]
+        end
+        
+        subgraph INPUT_GRP["Input Devices"]
+            direction TB
+            KVM["<b>USB KVM Switch</b>"]
+            KB_MOUSE["⌨️ Keyboard<br/>🖱️ Mouse"]
+            CAPTURE["<b>Capture Card</b><br/>USB 3.0"]
+            
+            KB_MOUSE -->|USB| KVM
+        end
+        
+        MIXER -->|XLR| MIC
+        MIXER -->|3.5mm| PHONES
+    end
+    
+    LAPTOP["💼 Corp Laptop"]
+    
+    KVM -->|"USB (Switchable)"| DESKTOP
+    KVM -.->|"USB (Switchable)"| LAPTOP
+    LAPTOP -->|HDMI Video| CAPTURE
+    CAPTURE -->|USB| DESKTOP
+    
+    classDef mainComponent fill:#2563eb,stroke:#1e40af,stroke-width:2px,color:#fff,font-weight:bold
+    classDef cooling fill:#06b6d4,stroke:#0891b2,stroke-width:2px,color:#fff
+    classDef storage fill:#10b981,stroke:#059669,stroke-width:1px,color:#fff
+    classDef display fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    classDef peripheral fill:#8b5cf6,stroke:#7c3aed,stroke-width:1px,color:#fff
+    classDef external fill:#ef4444,stroke:#dc2626,stroke-width:2px,color:#fff
+    classDef power fill:#eab308,stroke:#ca8a04,stroke-width:2px,color:#fff
+    classDef network fill:#14b8a6,stroke:#0d9488,stroke-width:1px,color:#fff
+    
+    class CPU,GPU,BOARD mainComponent
+    class COOLER cooling
+    class MIXER,MIC,PHONES,KVM,CAPTURE,KB_MOUSE peripheral
+    class RAM,SSD1,SSD2 storage
+    class PRIMARY,SECONDARY display
+    class LAPTOP external
+    class PSU power
+    class WIFI network

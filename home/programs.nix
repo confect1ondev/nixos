@@ -11,6 +11,9 @@
     
     # Media
     ffmpeg
+
+    # Audio Effects (mic reverb, noise gate, etc.)
+    easyeffects
     
     # Terminal & System
     kitty
@@ -92,4 +95,17 @@
   programs.kitty.enable = true;
   programs.waybar.enable = true;
   programs.gh.enable = true;
+
+  # OBS
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+      obs-vaapi #optional AMD hardware acceleration
+      obs-gstreamer
+      obs-vkcapture
+    ];
+  };
 }

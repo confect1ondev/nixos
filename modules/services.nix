@@ -18,6 +18,10 @@
     };
 
     extraConfig = ''
+      # Pruned mode - reduces blockchain size by ~7/8ths
+      prune-blockchain=1
+      sync-pruned-blocks=1
+
       # Privacy and security settings
       hide-my-port=1
       no-igd=1
