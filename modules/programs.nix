@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # System utilities
@@ -18,6 +18,12 @@
 
   # List packages installed in system profile
   environment.systemPackages = with pkgs; [
+    # Game launchers
+    inputs.hytale-launcher.packages.x86_64-linux.default
+
+    # CLI tools from flakes
+    inputs.witr.packages.x86_64-linux.default
+
     # Essential system tools
     tree
     file

@@ -14,9 +14,15 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hytale-launcher = {
+      url = "github:JPyke3/hytale-launcher-nix";
+    };
+    witr = {
+      url = "github:pranshuparmar/witr";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, firefox-addons }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, firefox-addons, hytale-launcher, witr }@inputs: 
   let
     system = "x86_64-linux";
     
