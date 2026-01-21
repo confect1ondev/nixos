@@ -5,15 +5,16 @@
   users.users.${config.my.username} = {
     isNormalUser = true;
     description = config.my.username;
-    extraGroups = [ 
-      "networkmanager" 
-      "wheel" 
+    extraGroups = [
+      "networkmanager"
+      "wheel"
       "video"     # GPU access
       "audio"     # Audio access
       "input"    # Input devices (keyboard, mouse, etc)
       "render"    # GPU rendering
       "libvirtd"  # Virtualization access
       "kvm"       # KVM access
+      "dialout"   # USB/Serial device access
     ];
     # Default password - CHANGE THIS IMMEDIATELY AFTER INSTALLATION
     initialPassword = "changeme";

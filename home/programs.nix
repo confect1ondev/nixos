@@ -8,7 +8,18 @@
     
     # Creative
     krita
-    
+    yabridge
+    yabridgectl
+    wineWowPackages.stable  # Stable - staging 10.5 has cryptbase bug
+    winetricks               # For installing Windows dependencies
+
+    # Bitwig wrapper - disable Vulkan ICD to fix crash on AMD/Wayland
+    (pkgs.writeShellScriptBin "bitwig-studio" ''
+      export VK_ICD_FILENAMES=""
+      export __EGL_VENDOR_LIBRARY_FILENAMES=""
+      exec ${pkgs.bitwig-studio}/bin/bitwig-studio "$@"
+    '')
+
     # Media
     ffmpeg
 
@@ -85,6 +96,8 @@
     ledger-live-desktop
     tor-browser-bundle-bin
     blockbench
+    intiface-central
+    blueman
   ] ++ lib.optionals (hostName == "laptop") [
     wvkbd  # Virtual keyboard for touch
   ];

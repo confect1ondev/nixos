@@ -52,6 +52,8 @@
     jq
     opencode
     claude-code
+    gnupg
+    pinentry-curses
 
     # Virtualization tools
     qemu
@@ -66,5 +68,10 @@
     # Cosmetic
     google-cursor
     juno-theme
+
+    # Webcam tools
+    v4l-utils       # Camera control utilities (v4l2-ctl)
+    guvcview        # GUI to test and adjust webcam settings
+    cameractrls     # Modern webcam settings GUI with Logitech support
   ];
 }

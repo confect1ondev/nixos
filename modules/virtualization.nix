@@ -18,6 +18,7 @@
             })
           ];
         };
+        vhostUserPackages = [ pkgs.virtiofsd ];
       };
       extraConfig = ''
         nvram = [
