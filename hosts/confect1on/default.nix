@@ -23,6 +23,13 @@
   # Host-specific configuration
   networking.hostName = "confect1on";
   
+  # Auto-mount secondary storage drive
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/6f0e48d2-a8a1-4957-9a4d-760a92f50b14";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" ];
+  };
+
   # Host-specific hardware configuration
   boot.kernelModules = [ "amdgpu" "i915" ];
   

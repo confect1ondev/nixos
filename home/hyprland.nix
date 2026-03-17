@@ -333,8 +333,8 @@
         "9, monitor:eDP-1"
         "10, monitor:eDP-1"
       ] else [
-        "1, monitor:HDMI-A-2"
-        "2, monitor:DP-2"
+        "1, monitor:HDMI-A-1"
+        "2, monitor:DP-1"
       ];
       
       # Execute at launch

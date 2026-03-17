@@ -12,6 +12,11 @@
         npm config set prefix "$HOME/.npm-global"
       fi
       
+      # IntelliJ IDEA wrapper - detached from terminal
+      idea() {
+        nohup idea-community "$@" &>/dev/null & disown
+      }
+
       # Kitty shell integration
       if [[ "$TERM" == "xterm-kitty" ]]; then
         # Create a custom sudo wrapper that changes background color
@@ -60,7 +65,7 @@
   home.sessionVariables = {
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";
     GDK_BACKEND = "x11";
-    JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
+    JAVA_HOME = "${pkgs.unstable.jdk25}/lib/openjdk";
   };
   home.file.".npm-global/.keep".text = "";
   home.file.".npmrc".text = ''

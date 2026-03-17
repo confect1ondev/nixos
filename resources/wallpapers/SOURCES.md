@@ -27,6 +27,21 @@
 - **Theme**: Anime/Gaming
 - **Resolution**: 3440x1440
 
+### gargantua-endurance.jpg
+- **Source**: [4K Wallpepers - Gargantua Endurance Wallpaper](https://4kwallpapers.com/space/gargantua-endurance-25445.html)
+- **Theme**: Space
+- **Resolution**: 3840x2160
+
+### lonely-apocalyptic.png
+- **Source**: [4K Wallpepers - Lonely Apocalyptic Wallpaper](https://4kwallpapers.com/fantasy/lonely-apocalyptic-25350.html)
+- **Theme**: Fantasy
+- **Resolution**: 3840x2160
+
+### chicago-city.jpg
+- **Source**: [4K Wallpepers - Chicago Night City Wallpaper](https://4kwallpapers.com/world/chicago-city-18599.html)
+- **Theme**: World
+- **Resolution**: 3840x2160
+
 ---
 
 *All images are for personal use only. Credits belong to their respective creators. Please reach out to [me@confect1on.com](mailto:me@confect1on.com) with any requsts for removal.*

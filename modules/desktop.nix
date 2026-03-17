@@ -55,6 +55,12 @@
   programs.hyprland.enable = true;
   programs.hyprlock.enable = true;
 
+  # XDG Desktop Portals (needed for file dialogs in Electron apps like Signal)
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   # Hint electron apps to use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 

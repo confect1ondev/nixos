@@ -18,6 +18,10 @@
 
   # List packages installed in system profile
   environment.systemPackages = with pkgs; [
+    # Other apps
+    unstable.signal-desktop
+    zoom-us
+    unstable.javaPackages.compiler.temurin-bin.jdk-25
     # Game launchers
     inputs.hytale-launcher.packages.x86_64-linux.default
 
@@ -44,7 +48,7 @@
     cargo
     rustc
     nodejs_24
-    jdk
+    unstable.jdk25
     glib
     gcc
     getent

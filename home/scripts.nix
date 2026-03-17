@@ -110,6 +110,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
       ["Monero GUI"]="${pkgs.monero-gui}/bin/monero-wallet-gui"
       ["Ledger GUI"]="${pkgs.ledger-live-desktop}/bin/ledger-live-desktop"
       ["Hytale Launcher"]="${inputs.hytale-launcher.packages.x86_64-linux.default}/bin/hytale-launcher"
+      ["Signal"]="${pkgs.unstable.signal-desktop}/bin/signal-desktop"
     )
     
     # Construct the list of application names for wofi

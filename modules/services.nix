@@ -50,6 +50,12 @@
     ReadWritePaths = [ "/var/lib/monero" ];
   };
 
+  # Jellyfin media server
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # Bluetooth
   services.blueman.enable = true;
 
