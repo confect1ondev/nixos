@@ -1,0 +1,20 @@
+{
+  imports = [
+    ./common.nix
+    ./boot.nix
+    ./hardware.nix
+    ./networking.nix
+    ./locale.nix
+    ./desktop.nix
+    ./audio.nix
+    ./virtualization.nix
+    ./services.nix
+    ./programs.nix
+    ./security.nix
+    ./tools.nix
+    ./users.nix
+    ./password-warning.nix
+    ./tpm-enrollment.nix
+    ./hyprlock-x.nix
+  ];
+}

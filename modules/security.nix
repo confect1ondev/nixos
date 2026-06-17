@@ -19,6 +19,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
+  nix.settings.extra-substituters = [ "https://claude-code.cachix.org" ];
+  nix.settings.extra-trusted-public-keys = [ "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk=" ];
 
   # Firewall configuration
   networking.firewall = {

@@ -78,11 +78,11 @@ let
     background-color=#1B2D1BF0
     border-color=#A6E3A1
     
-    [app-name=Discord]
+    [app-name=Vesktop]
     background-color=#2B1B2DF0
     border-color=#CBA6F7
-    
-    [app-name=discord]
+
+    [app-name=vesktop]
     background-color=#2B1B2DF0
     border-color=#CBA6F7
     

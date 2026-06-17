@@ -42,6 +42,12 @@
 - **Theme**: World
 - **Resolution**: 3840x2160
 
+### chicago-alex.png
+#### the silhouette is me :)
+- **Source**: [Alex Jacobs](https://www.instagram.com/p/DYxxNnWSa3W/)
+- **Theme**: World
+- **Resolution**: 4605x3070
+
 ---
 
 *All images are for personal use only. Credits belong to their respective creators. Please reach out to [me@confect1on.com](mailto:me@confect1on.com) with any requsts for removal.*

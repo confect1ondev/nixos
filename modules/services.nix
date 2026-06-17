@@ -6,6 +6,22 @@
     package = pkgs.mariadb;
   };
 
+  # Lazy-start MariaDB on first socket connection (Arch-style).
+  # Not true fd-passing — mariadb opens its own listener after start, so the
+  # triggering connection may fail/stall; retry once the daemon is up.
+  systemd.services.mysql.wantedBy = lib.mkForce [ ];
+  systemd.tmpfiles.rules = [ "d /run/mysqld 0755 mysql mysql -" ];
+  systemd.sockets.mysql = {
+    description = "MariaDB lazy-start socket";
+    wantedBy = [ "sockets.target" ];
+    socketConfig = {
+      ListenStream = "/run/mysqld/mysqld.sock";
+      SocketMode = "0660";
+      SocketUser = "mysql";
+      SocketGroup = "mysql";
+    };
+  };
+
   # Monero daemon with enhanced security
   services.monero = {
     enable = true;

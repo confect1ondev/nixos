@@ -1,4 +1,4 @@
-{ config, pkgs, my, lib, hostName, inputs, ... }:
+{ config, pkgs, my, lib, inputs, ... }:
 
 let
 lock-script = pkgs.writeShellScriptBin "lock-script" ''
@@ -19,7 +19,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
     kill -0 "$1" 2>/dev/null
   }
 
-  ${lib.optionalString (hostName == "confect1on") ''
+  ${lib.optionalString (my.hardware.hasLiquidctl) ''
     # State file to track lock status
     LOCK_STATE_FILE="/tmp/hyprlock-state"
 
@@ -65,7 +65,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
   # Save lock start time (optional)
   date --iso-8601=seconds > /tmp/hyprlock-start || true
 
-  ${lib.optionalString (hostName == "confect1on") ''
+  ${lib.optionalString (my.hardware.hasLiquidctl) ''
     # Mark as locked
     touch "$LOCK_STATE_FILE"
   ''}
@@ -74,7 +74,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
   ${pkgs.hyprlock}/bin/hyprlock &
   HLPID=$!
 
-  ${lib.optionalString (hostName == "confect1on") ''
+  ${lib.optionalString (my.hardware.hasLiquidctl) ''
     # launch the conditional pre-lock worker with the hyprlock PID
     prelock_worker "$HLPID" >/dev/null 2>&1 &
   ''}
@@ -82,7 +82,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
   # Wait for unlock
   wait "$HLPID" || true
 
-  ${lib.optionalString (hostName == "confect1on") ''
+  ${lib.optionalString (my.hardware.hasLiquidctl) ''
     # Mark as unlocked
     rm -f "$LOCK_STATE_FILE"
 
@@ -111,6 +111,7 @@ lock-script = pkgs.writeShellScriptBin "lock-script" ''
       ["Ledger GUI"]="${pkgs.ledger-live-desktop}/bin/ledger-live-desktop"
       ["Hytale Launcher"]="${inputs.hytale-launcher.packages.x86_64-linux.default}/bin/hytale-launcher"
       ["Signal"]="${pkgs.unstable.signal-desktop}/bin/signal-desktop"
+      ["Discord"]="${pkgs.vesktop}/bin/vesktop"
     )
     
     # Construct the list of application names for wofi

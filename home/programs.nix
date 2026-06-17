@@ -1,4 +1,4 @@
-{ config, pkgs, my, lib, hostName, ... }:
+{ config, pkgs, my, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -88,6 +88,7 @@
     # -------------------------------------------------------------------
 
     # Apps
+    unstable.vesktop
     spotify
     jetbrains.idea-community-bin
     obsidian
@@ -96,9 +97,8 @@
     ledger-live-desktop
     tor-browser-bundle-bin
     blockbench
-    intiface-central
     blueman
-  ] ++ lib.optionals (hostName == "laptop") [
+  ] ++ lib.optionals (my.desktop.isLaptop) [
     wvkbd  # Virtual keyboard for touch
   ];
 

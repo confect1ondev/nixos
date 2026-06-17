@@ -20,12 +20,16 @@
     witr = {
       url = "github:pranshuparmar/witr";
     };
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, firefox-addons, hytale-launcher, witr }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, firefox-addons, hytale-launcher, witr, claude-code-nix }@inputs:
   let
     system = "x86_64-linux";
-    
+
     # Shared overlay for all hosts
     overlay-unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -33,55 +37,35 @@
         config.allowUnfree = true;
       };
     };
-    
+
     # Shared special args for all modules
     specialArgs = { inherit inputs; };
+
+    # Helper to create a host configuration
+    mkHost = hostDir: nixpkgs.lib.nixosSystem {
+      inherit system specialArgs;
+      modules = [
+        { nixpkgs.overlays = [ overlay-unstable ]; }
+        disko.nixosModules.disko
+        home-manager.nixosModules.home-manager
+        ({ config, ... }: {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${config.my.username} = import ./home;
+          home-manager.backupFileExtension = "bkp";
+          home-manager.extraSpecialArgs = {
+            inherit (config) my;
+            inherit inputs firefox-addons;
+          };
+        })
+        hostDir
+      ];
+    };
   in
   {
     nixosConfigurations = {
-      confect1on = nixpkgs.lib.nixosSystem {
-        inherit system specialArgs;
-        
-        modules = [
-          { nixpkgs.overlays = [ overlay-unstable ]; }
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          ({ config, ... }: {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${config.my.username} = import ./home;
-            home-manager.backupFileExtension = "bkp";
-            home-manager.extraSpecialArgs = { 
-              inherit (config) my;
-              inherit inputs firefox-addons;
-              hostName = config.networking.hostName;
-            };
-          })
-          ./hosts/confect1on
-        ];
-      };
-      
-      laptop = nixpkgs.lib.nixosSystem {
-        inherit system specialArgs;
-        
-        modules = [
-          { nixpkgs.overlays = [ overlay-unstable ]; }
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          ({ config, ... }: {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${config.my.username} = import ./home;
-            home-manager.backupFileExtension = "bkp";
-            home-manager.extraSpecialArgs = { 
-              inherit (config) my;
-              inherit inputs firefox-addons;
-              hostName = config.networking.hostName;
-            };
-          })
-          ./hosts/laptop
-        ];
-      };
+      confect1on = mkHost ./hosts/confect1on;
+      laptop = mkHost ./hosts/laptop;
     };
   };
 }

@@ -24,6 +24,7 @@
     unstable.javaPackages.compiler.temurin-bin.jdk-25
     # Game launchers
     inputs.hytale-launcher.packages.x86_64-linux.default
+    mcpelauncher-ui-qt
 
     # CLI tools from flakes
     inputs.witr.packages.x86_64-linux.default
@@ -61,7 +62,7 @@
     ent
     jq
     opencode
-    claude-code
+    inputs.claude-code-nix.packages.x86_64-linux.default
     gnupg
     pinentry-curses
 

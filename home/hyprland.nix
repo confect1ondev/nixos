@@ -1,4 +1,4 @@
-{ config, pkgs, my, lib, hostName, ... }:
+{ config, pkgs, my, lib, ... }:
 
 {
   # Hyprpaper configuration
@@ -16,8 +16,8 @@
     enable = true;
     settings = {
       general = {
-        no_fade_in = true;
-        no_fade_out = true;
+        no_fade_in = false;
+        no_fade_out = false;
         hide_cursor = false;
         grace = 0;
         disable_loading_bar = true;
@@ -37,7 +37,8 @@
       ];
       
       fade = {
-        duration = 100;
+        in_duration = 200;
+        out_duration = 700;
       };
       
       input = {
@@ -48,16 +49,22 @@
       input-field = [
         {
           monitor = "";
-          size = "320, 90";
-          outline_thickness = 0;
-          outer_color = "rgba(255, 0, 0, 1)";
-          inner_color = "rgba(255, 0, 0, 1)";
-          font_color = "rgb(0, 0, 0)";
+          size = "560, 120";
+          outline_thickness = 2;
+          outer_color = "rgba(255, 0, 0, 0.9)";
+          inner_color = "rgba(25, 0, 0, 0.55)";
+          font_color = "rgb(255, 80, 80)";
+          font_family = "Red Hat Mono";
           fade_on_empty = false;
           rounding = 0;
-          check_color = "rgb(255, 0, 0)";
-          placeholder_text = " TRM LOCKED";
+          check_color = "rgb(255, 200, 0)";
+          fail_color = "rgb(255, 0, 0)";
+          capslock_color = "rgb(255, 100, 0)";
+          placeholder_text = "<i>TRM LOCKED</i>";
           hide_input = false;
+          shadow_passes = 1;
+          shadow_size = 4;
+          shadow_color = "rgba(255, 0, 0, 0.5)";
           position = "0, -100";
           halign = "center";
           valign = "center";
@@ -67,7 +74,7 @@
       label = [
         # Top left labels - multilingual lock messages
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "TERMINAL LOCKED – AUTHENTICATION REQUIRED";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -77,7 +84,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "端末ロック中 – 認証が必要です";
           font_family = "Noto Sans CJK JP";
           font_size = 18;
@@ -87,7 +94,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "ACCÈS RESTREINT – VEUILLEZ VOUS IDENTIFIER";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -97,7 +104,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "ЗАЩИЩЕННЫЙ ТЕРМИНАЛ – ПОДТВЕРДИТЕ ДОСТУП";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -107,7 +114,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "터미널 잠김 – 인증 필요";
           font_family = "Noto Sans CJK KR";
           font_size = 18;
@@ -117,7 +124,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "BLOQUEO DE TERMINAL – AUTENTICACIÓN REQUERIDA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -127,7 +134,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "GERÄT GESPERRT – AUTHENTIFIZIERUNG ERFORDERLICH";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -137,7 +144,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "BLOCCO TERMINALE – AUTENTICAZIONE RICHIESTA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -147,7 +154,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "TERMINAL BLOQUEADO – AUTENTICAÇÃO NECESSÁRIA";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -159,7 +166,7 @@
         
         # Top right time/date/system labels
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:40] echo \"DATE: $(date +%s.%3N)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -169,7 +176,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:40] echo \"$(date '+%I:%M:%S %p')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -179,7 +186,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:60000] echo \"$(date '+%B %d, %Y')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -189,7 +196,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:40] echo \"UPTIME: $(awk '{print int($1 * 1000)}' /proc/uptime)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -199,7 +206,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:100] awk '{s=int($1); d=int(s/86400); h=int((s%86400)/3600); m=int((s%3600)/60); if(d>0) printf \"%d days, %d hours, %d minutes\", d, h, m; else if(h>0) printf \"%d hours, %d minutes\", h, m; else printf \"%d minutes\", m}' /proc/uptime";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -209,7 +216,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:100] echo \"PROC: $(ps -e | wc -l)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -219,7 +226,7 @@
           valign = "top";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:100] df -h / | awk 'NR==2 { print \"DISK: \" $5 }'";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -228,10 +235,99 @@
           halign = "right";
           valign = "top";
         }
-        
+
+        # Callsign sigil — current username, uppercased, resolved at lock time.
+        {
+          monitor = my.desktop.primaryMonitor;
+          text = ''cmd[update:0] echo "$USER" | tr a-z A-Z'';
+          font_family = "Red Hat Mono";
+          font_size = 48;
+          color = "rgba(255, 0, 0, 0.95)";
+          position = "0, 20";
+          halign = "center";
+          valign = "center";
+        }
+
+        # Pulsing 1Hz LED — now below the input box.
+        {
+          monitor = "";
+          text = ''cmd[update:500] [ $(($(date +%s) % 2)) = 0 ] && echo "[ ● LINK ]" || echo "[ ○ LINK ]"'';
+          font_family = "Red Hat Mono";
+          font_size = 14;
+          color = "rgba(255, 0, 0, 0.85)";
+          position = "0, -200";
+          halign = "center";
+          valign = "center";
+        }
+
+        # HUD corner brackets framing the input box (targeting reticle feel).
+        {
+          monitor = "";
+          text = "╔";
+          font_family = "Red Hat Mono";
+          font_size = 28;
+          color = "rgba(255, 0, 0, 0.9)";
+          position = "-300, -30";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "╗";
+          font_family = "Red Hat Mono";
+          font_size = 28;
+          color = "rgba(255, 0, 0, 0.9)";
+          position = "300, -30";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "╚";
+          font_family = "Red Hat Mono";
+          font_size = 28;
+          color = "rgba(255, 0, 0, 0.9)";
+          position = "-300, -170";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "╝";
+          font_family = "Red Hat Mono";
+          font_size = 28;
+          color = "rgba(255, 0, 0, 0.9)";
+          position = "300, -170";
+          halign = "center";
+          valign = "center";
+        }
+
+        # Asymmetric chevrons flanking the input box.
+        {
+          monitor = "";
+          text = "&gt;";
+          font_family = "Red Hat Mono";
+          font_size = 56;
+          color = "rgba(255, 0, 0, 0.55)";
+          position = "-350, -100";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "&lt;";
+          font_family = "Red Hat Mono";
+          font_size = 56;
+          color = "rgba(255, 0, 0, 0.55)";
+          position = "350, -100";
+          halign = "center";
+          valign = "center";
+        }
+
+
         # Bottom left system info
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:10000] echo \"OS: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -241,7 +337,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:60000] echo \"KERNEL: $(uname -r)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -251,7 +347,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:1000] echo \"USER: $USER\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -261,7 +357,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:1000] echo \"TTY: $(tty)\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -271,7 +367,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:1000] echo \"SHELL: $SHELL\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -281,7 +377,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:1000] bash -c '[[ -f /tmp/hyprlock-start ]] && journalctl --since \"$(cat /tmp/hyprlock-start)\" | grep \"password check failed\" | wc -l | xargs echo \"FAILED LOGINS:\" || echo \"FAILED LOGINS: N/A\"'";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -291,7 +387,7 @@
           valign = "bottom";
         }
         {
-          monitor = if hostName == "laptop" then "eDP-1" else "DP-1";
+          monitor = my.desktop.primaryMonitor;
           text = "cmd[update:1000] echo \"$(lsblk -o TYPE | grep crypt >/dev/null && echo 'ENCRYPTED (LUKS)' || echo 'NOT ENCRYPTED')\"";
           font_family = "Red Hat Mono";
           font_size = 18;
@@ -307,35 +403,16 @@
   wayland.windowManager.hyprland = {
     enable = true;
     
-    plugins = lib.optionals (hostName == "laptop") [
+    plugins = lib.optionals (my.desktop.isLaptop) [
       pkgs.hyprlandPlugins.hyprgrass
     ];
     
     settings = {
       # Monitor configuration
-      monitor = if hostName == "laptop" then [
-        "eDP-1,1920x1080@60,0x0,1"
-      ] else [
-        "DP-1,3440x1440@240.00101,0x0,1"
-        "HDMI-A-1,2560x1440@60,3440x-1050,1,transform,3"
-      ];
+      monitor = my.desktop.monitors;
       
       # Workspace assignments
-      workspace = if hostName == "laptop" then [
-        "1, monitor:eDP-1"
-        "2, monitor:eDP-1"
-        "3, monitor:eDP-1"
-        "4, monitor:eDP-1"
-        "5, monitor:eDP-1"
-        "6, monitor:eDP-1"
-        "7, monitor:eDP-1"
-        "8, monitor:eDP-1"
-        "9, monitor:eDP-1"
-        "10, monitor:eDP-1"
-      ] else [
-        "1, monitor:HDMI-A-1"
-        "2, monitor:DP-1"
-      ];
+      workspace = my.desktop.workspaces;
       
       # Execute at launch
       exec-once = [
@@ -360,7 +437,7 @@
       input = {
         kb_layout = "us";
         follow_mouse = 1;
-        sensitivity = if hostName == "laptop" then 0.2 else -1;
+        sensitivity = my.desktop.inputSensitivity;
         kb_options = "caps:backspace";
       };
       
@@ -427,7 +504,7 @@
       };
       
       # Hyprgrass plugin configuration (only applies on laptop)
-      plugin = lib.mkIf (hostName == "laptop") {
+      plugin = lib.mkIf (my.desktop.isLaptop) {
         touch_gestures = {
           sensitivity = 4.0;  # Higher for tablet screens
           workspace_swipe_fingers = 3;
@@ -441,7 +518,7 @@
       windowrulev2 = [
         "suppressevent maximize, class:.*"
         "opacity 0.94 0.94,class:^(Code|Spotify)$"
-      ] ++ lib.optionals (hostName == "laptop") [
+      ] ++ lib.optionals (my.desktop.isLaptop) [
         # Virtual keyboard rules
         "float, class:^(wvkbd-mobintl)$"
         "size 100% 300, class:^(wvkbd-mobintl)$"
@@ -522,7 +599,7 @@
         ", code:172, exec, playerctl play-pause"
         ", code:173, exec, playerctl previous"
         ", code:171, exec, playerctl next"
-      ] ++ lib.optionals (hostName == "laptop") [
+      ] ++ lib.optionals (my.desktop.isLaptop) [
         # Hyprgrass edge swipes
         ", edge:r:l, workspace, +1"  # Swipe left from right edge - next workspace
         ", edge:l:r, workspace, -1"  # Swipe right from left edge - previous workspace
@@ -545,7 +622,7 @@
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
-      ] ++ lib.optionals (hostName == "laptop") [
+      ] ++ lib.optionals (my.desktop.isLaptop) [
         # Hyprgrass long press gestures
         ", longpress:2, movewindow"  # 2 finger long press - move window
         ", longpress:3, resizewindow"  # 3 finger long press - resize window
