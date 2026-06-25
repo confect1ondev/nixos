@@ -544,12 +544,11 @@
         # Lock and screenshots
         "SUPER, L, exec, lock-script"
         "SUPER, Z, exec, grim -g \"$(slurp)\""
-        "SUPER SHIFT, Z, exec, grim -g \"0,0 3440x1440\""
+        "SUPER SHIFT, Z, exec, grim -o ${my.desktop.primaryMonitor}"
         "SUPER ALT, Z, exec, grim -g \"$(slurp)\" - | wl-copy"
-        "SUPER ALT SHIFT, Z, exec, grim -g \"0,0 3440x1440\" - | wl-copy"
-        
+        "SUPER ALT SHIFT, Z, exec, grim -o ${my.desktop.primaryMonitor} - | wl-copy"
+
         # App shortcuts
-        "ALT, 1, exec, brave"
         "ALT, 2, exec, firefox"
         "ALT, 3, exec, code"
         

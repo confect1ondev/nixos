@@ -51,7 +51,14 @@
         ({ config, ... }: {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.${config.my.username} = import ./home;
+          # Shared home base + per-host home.nix. Every host directory must
+          # contain a home.nix (it may be empty: `{ }`).
+          home-manager.users.${config.my.username} = {
+            imports = [
+              ./home
+              (hostDir + "/home.nix")
+            ];
+          };
           home-manager.backupFileExtension = "bkp";
           home-manager.extraSpecialArgs = {
             inherit (config) my;

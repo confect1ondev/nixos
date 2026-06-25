@@ -1,72 +1,42 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # System utilities
-  # Firefox is now configured in firefox-policies.nix
+  # System file manager (used by Hyprland $fileManager binding).
   programs.thunar.enable = true;
 
-  # Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  # Allow unfree packages
+  # Required for various proprietary apps (steam, vscode, etc.). Personal apps
+  # gated separately, but unfree on its own is harmless.
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile
   environment.systemPackages = with pkgs; [
-    # Other apps
-    unstable.signal-desktop
-    zoom-us
-    unstable.javaPackages.compiler.temurin-bin.jdk-25
-    # Game launchers
-    inputs.hytale-launcher.packages.x86_64-linux.default
-    mcpelauncher-ui-qt
-
-    # CLI tools from flakes
-    inputs.witr.packages.x86_64-linux.default
-
-    # Essential system tools
+    # Essential CLI / system tools
     tree
     file
     wget
     wl-clipboard
     pavucontrol
     home-manager
-    libnotify  # For desktop notifications
+    libnotify
     lsof
     pamixer
     gsettings-desktop-schemas
-
-    # TPM2 tools
-    tpm2-tss
-    tpm2-tools
-
-    # Development tools
-    cargo
-    rustc
-    nodejs_24
-    unstable.jdk25
     glib
-    gcc
     getent
+
+    # Standard sysadmin utilities
     age
     zip
     unzip
-    rar
-    unrar
     xxd
-    ent
     jq
-    opencode
-    inputs.claude-code-nix.packages.x86_64-linux.default
     gnupg
     pinentry-curses
 
-    # Virtualization tools
+    # TPM2 (paired with modules/security.nix tpm2 enablement)
+    tpm2-tss
+    tpm2-tools
+
+    # Virtualization (paired with modules/virtualization.nix)
     qemu
     libvirt
     spice-gtk
@@ -75,14 +45,5 @@
     win-spice
     OVMF
     e2fsprogs
-
-    # Cosmetic
-    google-cursor
-    juno-theme
-
-    # Webcam tools
-    v4l-utils       # Camera control utilities (v4l2-ctl)
-    guvcview        # GUI to test and adjust webcam settings
-    cameractrls     # Modern webcam settings GUI with Logitech support
   ];
 }

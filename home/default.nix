@@ -5,7 +5,6 @@
     ./programs.nix
     ./shell.nix
     ./desktop.nix
-    ./dotfiles.nix
     ./hyprland.nix
     ./wofi.nix
     ./scripts.nix

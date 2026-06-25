@@ -95,5 +95,22 @@
         description = "Whether this host has OpenRGB-compatible RGB hardware";
       };
     };
+
+    # --- opinionated services (default off so new hosts don't inherit them) ---
+    services = {
+      steam.enable = lib.mkEnableOption "Steam with Remote Play / dedicated server / LAN transfer firewall ports";
+      mariadb.enable = lib.mkEnableOption "MariaDB with lazy socket activation";
+      monero.enable = lib.mkEnableOption "Monero daemon (pruned, restricted RPC). Also installs monero-gui";
+      jellyfin.enable = lib.mkEnableOption "Jellyfin media server";
+      coolercontrol.enable = lib.mkEnableOption "CoolerControl liquid cooling daemon";
+      thunderbird.enable = lib.mkEnableOption "Thunderbird email client";
+    };
+
+    # --- wofi app-menu entries (consumed by home/scripts.nix app-menu) ---
+    appMenu.apps = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      description = "App-menu entries: name → command. Each maps to a wofi row that execs the command.";
+    };
   };
 }
