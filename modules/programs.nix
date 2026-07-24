@@ -8,6 +8,22 @@
   # gated separately, but unfree on its own is harmless.
   nixpkgs.config.allowUnfree = true;
 
+  # Runs generic-Linux dynamically-linked binaries (e.g. PlatformIO's bundled
+  # cmake/toolchain/esptool under ~/.platformio) that don't know about /nix/store.
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc
+    zlib
+    libusb1
+    ncurses
+    openssl
+    expat
+    xz
+    libxml2
+    libffi
+    util-linux
+  ];
+
   environment.systemPackages = with pkgs; [
     # Essential CLI / system tools
     tree
@@ -31,6 +47,10 @@
     jq
     gnupg
     pinentry-curses
+    usbutils
+
+    # Python interpreter (3.6+; nixpkgs default is currently 3.12)
+    python3
 
     # TPM2 (paired with modules/security.nix tpm2 enablement)
     tpm2-tss

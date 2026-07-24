@@ -22,6 +22,7 @@
     jetbrains.idea-community-bin
     inputs.claude-code-nix.packages.x86_64-linux.default
     inputs.witr.packages.x86_64-linux.default
+    inputs.self.packages.x86_64-linux.claude-monitor
     opencode
 
     # Dev — toolchains

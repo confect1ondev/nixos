@@ -8,6 +8,7 @@
     # Terminal & system
     kitty
     btop
+    zellij
     playerctl
     gsettings-desktop-schemas
     glib

@@ -30,6 +30,8 @@
   let
     system = "x86_64-linux";
 
+    pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+
     # Shared overlay for all hosts
     overlay-unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -70,6 +72,8 @@
     };
   in
   {
+    packages.${system}.claude-monitor = pkgs.callPackage ./pkgs/claude-monitor.nix { };
+
     nixosConfigurations = {
       confect1on = mkHost ./hosts/confect1on;
       laptop = mkHost ./hosts/laptop;
